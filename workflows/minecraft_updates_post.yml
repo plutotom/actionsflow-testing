@@ -2,30 +2,32 @@ on:
   webhook:
     method: post
 jobs:
-  steps:
-    - uses: actionsflow/ifttt-webhook-action@v1
-      with:
-        event: minecraft_notice
-        key: b7V5nK1OF8QRKMM5EgA9YD
-        value1: optional-value 1 here
-        value2: optional-value 2
-        value3: optional-value and this is 3rd one
-  email:
-  name: Post a email
-  runs-on: ubuntu-latest
-  steps:
-    - name: Send mail
-      uses: dawidd6/action-send-mail@v2
-      with:
-        server_address: smtp.zoho.com
-        server_port: 465
-        username: ${{secrets.MAIL_USERNAME}}
-        password: ${{secrets.MAIL_PASSWORD}}
-        subject: ${{ on }}
-        # Literal body:
-        body: ${{ on.body }}
-        # Read file contents as body:
-        to: plutotom@live.com
-        from: plutotom@Live.com # <user@example.com>
-        # Optional content type (defaults to text/plain):
-        content_type: text/html
+  - job: sending web hook info to ifttt
+    steps:
+      - uses: actionsflow/ifttt-webhook-action@v1
+        with:
+          event: minecraft_notice
+          key: b7V5nK1OF8QRKMM5EgA9YD
+          value1: optional-value 1 here
+          value2: optional-value 2
+          value3: optional-value and this is 3rd one
+  - job: sending email to plutotom
+      email:
+      name: Post a email
+      runs-on: ubuntu-latest
+      steps:
+        - name: Send mail
+          uses: dawidd6/action-send-mail@v2
+          with:
+            server_address: smtp.zoho.com
+            server_port: 465
+            username: ${{secrets.MAIL_USERNAME}}
+            password: ${{secrets.MAIL_PASSWORD}}
+            subject: ${{ on }}
+            # Literal body:
+            body: ${{ on.body }}
+            # Read file contents as body:
+            to: plutotom@live.com
+            from: plutotom@Live.com # <user@example.com>
+            # Optional content type (defaults to text/plain):
+            content_type: text/html
