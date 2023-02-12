@@ -1,6 +1,6 @@
 on:
   webhook:
-    method: post
+    method: .*post
 jobs:
   email:
   name: Post a email to plutotom
